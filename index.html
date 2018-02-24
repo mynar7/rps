@@ -7,31 +7,41 @@
     <title>Document</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+    <style>
+    
+        body {
+            background-image: url("./images/tileable_wood_texture.png");
+        }
+
+    </style>
+
 </head>
 <body>
         <div class="container">
-            <div class="col-lg-8 col-lg-offset-2">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
                 <h1>Try and best this site in Rock, Paper, Scissors!</h1>
                 <br>
                 <h2 id="wins"></h2>
                 <h2 id="losses"></h2>
+                <h2 id="draws"></h2>
 
 
-                <div class="btn-group" id="fuck">
-                    <button type="button" class="btn btn-default btn1" id="0">Rock</button>
-                    <button type="button" class="btn btn-default btn1" id="1">Paper</button>
-                    <button type="button" class="btn btn-default btn1" id="2">Scissors</button>
+                <div class="btn-group" id="ugh">
+                    <button type="button" class="btn btn-lg btn-primary" value="0">Rock</button>
+                    <button type="button" class="btn btn-lg btn-primary" value="1">Paper</button>
+                    <button type="button" class="btn btn-lg btn-primary" value="2">Scissors</button>
                 </div>
+
+                
             </div><!--column-->
         </div><!--container-->
         <script>
             var wins = 0;
             var losses = 0;
-            document.getElementById("fuck").addEventListener("click", function(e) {
-                var player = parseInt(e.target.getAttribute("id"));
-                console.log(player);
+            var draws = 0;
+            document.getElementById("ugh").addEventListener("click", function(e) {
+                var player = parseInt(e.target.getAttribute("value"));
                 var cpu = Math.floor(Math.random() * 3);
-                console.log(cpu);
                 var game;
                 
                 var rps = ["Rock","Paper","Scissors"];
@@ -39,6 +49,7 @@
                 //determine if it was a draw
                 if (player === cpu) {
                     game = 0;
+                    draws++;
                 //determine if player chose higher than cpu, unless player vs cpu is scissors vs rock 
                 } else if (player > cpu && player - cpu !== 2 ) {
                     game = "Win";
@@ -57,14 +68,20 @@
 
                 //display results of game!
                 if (game === 0) {
-                    document.querySelector("h1").innerHTML = "You picked " + player + ", I chose " + cpu + ". It was a draw";
+                    document.querySelector("h1").innerHTML = "You picked " + player + ", I chose " + cpu + "." + "</h1><br><h1>It was a draw";
                 } else {
-                    document.querySelector("h1").innerHTML = "You picked " + player + ", I chose " + cpu + ". Looks like you " + game + "!";
+                    document.querySelector("h1").innerHTML = "You picked " + player + ", I chose " + cpu + "." + "</h1><br><h1>Looks like you " + game + "!";
                 }
                 
-                if (wins > 0 || losses > 0) {
+                //Scoreboard!
+                if (wins > 0) {
                     document.getElementById("wins").innerHTML = "Wins: " + wins;
+                }
+                if (losses > 0) {
                     document.getElementById("losses").innerHTML = "Losses: " + losses;
+                }
+                if (draws > 0) {
+                    document.getElementById("draws").innerHTML = "Draws: " + draws;
                 }
             });
             
