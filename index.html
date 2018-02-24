@@ -12,61 +12,62 @@
         <div class="container">
             <div class="col-lg-8 col-lg-offset-2">
                 <h1>Try and best this site in Rock, Paper, Scissors!</h1>
+                <br>
+                <h2 id="wins"></h2>
+                <h2 id="losses"></h2>
 
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default" onclick="getChoice(0)">Rock</button>
-                    <button type="button" class="btn btn-default" onclick="getChoice(1)">Paper</button>
-                    <button type="button" class="btn btn-default" onclick="getChoice(2)">Scissors</button>
+
+                <div class="btn-group" id="fuck">
+                    <button type="button" class="btn btn-default btn1" id="0">Rock</button>
+                    <button type="button" class="btn btn-default btn1" id="1">Paper</button>
+                    <button type="button" class="btn btn-default btn1" id="2">Scissors</button>
                 </div>
             </div><!--column-->
         </div><!--container-->
         <script>
-            function getChoice(player) {
+            var wins = 0;
+            var losses = 0;
+            document.getElementById("fuck").addEventListener("click", function(e) {
+                var player = parseInt(e.target.getAttribute("id"));
                 console.log(player);
                 var cpu = Math.floor(Math.random() * 3);
                 console.log(cpu);
                 var game;
                 
+                var rps = ["Rock","Paper","Scissors"];
+
                 //determine if it was a draw
                 if (player === cpu) {
                     game = 0;
                 //determine if player chose higher than cpu, unless player vs cpu is scissors vs rock 
                 } else if (player > cpu && player - cpu !== 2 ) {
                     game = "Win";
+                    wins++;
                 //determine if player chose rock and cpu chose scissors
                 } else if (player - cpu === -2 ) {
                     game = "Win";
+                    wins++;
                 } else {
                     game = "Lose";
+                    losses++;
                 }
                 
-                //assign string to player choice
-                if (player === 0) {
-                    player = "Rock";
-                } else if (player === 1) {
-                    player = "Paper";
-                } else {
-                    player = "Scissors"
-                }
-
-
-                //assign string to cpu choice
-                if (cpu === 0) {
-                    cpu = "Rock";
-                } else if (cpu === 1) {
-                    cpu = "Paper";
-                } else {
-                    cpu = "Scissors"
-                }
+                player = rps[player];
+                cpu = rps[cpu];
 
                 //display results of game!
                 if (game === 0) {
-                    document.write("<h1>You picked " + player + ", I chose " + cpu + ". It was a draw</h1><br><h3>Play Again?</h3><br><h4>Just Refresh...</h4>");
+                    document.querySelector("h1").innerHTML = "You picked " + player + ", I chose " + cpu + ". It was a draw";
                 } else {
-                    document.write("<h1>You picked " + player + ", I chose " + cpu + ". Looks like you " + game + "!</h1><br><h3>Play Again?</h3><br><h4>Just Refresh...</h4>" );
+                    document.querySelector("h1").innerHTML = "You picked " + player + ", I chose " + cpu + ". Looks like you " + game + "!";
                 }
-
-            }
+                
+                if (wins > 0 || losses > 0) {
+                    document.getElementById("wins").innerHTML = "Wins: " + wins;
+                    document.getElementById("losses").innerHTML = "Losses: " + losses;
+                }
+            });
+            
         </script>
         <script src="http://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
